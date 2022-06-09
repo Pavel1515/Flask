@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Привет мир{% endblock %}
 {% block body %}
-<a href="/form">Добавить</a>
+<a href="/form" class="hider">Добавить</a>
+<p class="title">Список ваших заметок :</p>   
 <div class="container"></div>
 {% for i in base %}
-
     <h2>Название: {{i.title}}</h2>
     <p>{{i.text}}</p>
-    <a href="/delete/{{i.id}}">Удалить</a>
-    <p>Дата созданиея:{{i.time}}</p>
-
+    <a href="/delete/{{i.id}}" class="delete">Удалить</a>
+    <p>Дата создания: {{i.time}}</p>
 {% endfor %}
 </div>
 {% endblock %}

@@ -18,6 +18,7 @@ class Date_b(db.Model):
     def __repl__(self):
         return '<Date_b %r>' % self.id
 
+
 @app.route("/")
 def index():
     base = Date_b.query.all()
