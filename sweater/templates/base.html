@@ -5,6 +5,12 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{url_for('static', filename='/css/style.css')}}">
 <body>
+    <ul class="menu">
+        <li class="m_btn"><a href="/logi">Авторизация</a></li>
+        <li class="m_btn"><a href="/registr">Регистрация</a></li>
+        <li class="m_btn"><a href="/logaut">Выйти</a></li>
+        <li class="m_btn"><a href="/">Главная</a></li>
+    </ul>   
 {% block body %}{% endblock %}
 </body>
 </html>

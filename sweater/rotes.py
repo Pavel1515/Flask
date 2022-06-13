@@ -41,23 +41,26 @@ def dellete(id):
 
 
 @app.route("/registr", methods=['GET','POST'])
-def regist():
-    login = request.form.get('login')
-    password = request.form.get('password')
-    password2 = request.form.get('password')
-
-    if request.methods == "POST":
+def reg():
+    if request.method == "POST":
+        login = request.form.get('login')
+        password = request.form.get('password')
+        password2 = request.form.get('password')
         if not(login and password and password2):
             flash("Введите все поля")
         elif password!=password:
             flash("Пароли не совпадают")
         else:
-            hash_psw = generate_password_hash(password)
-            new_user = User(login = login ,password =hash_psw)
-            db.session.add(new_user)
-            db.session.commit()
-            return redirect(url_for('login_page'))
-
+            try:
+                hash_psw = generate_password_hash(password2)
+                new_user = User(login = login ,password =hash_psw)
+                db.session.add(new_user)
+                db.session.commit()
+                return redirect('http://127.0.0.1:5000/login')
+            except:
+                return "Такой логин есть"
+    return render_template('registr.html')
+   
 
 
 
@@ -68,14 +71,13 @@ def log():
     password = request.form.get('password')
 
     if login and password:
-        user = User.query.filter(login=login).first()
+        user = User.query.order_by(User.login).first()
 
         if user and check_password_hash(user.password , password):
             login_user(user)
-            next_page = request.args.get('next')
-            redirect(next_page)
+            return redirect('http://127.0.0.1:5000/')
         else:
-            flash('Ошибка авторизации')
+            return 'Ошибка авторизации' 
     else:
         
         return render_template("login.html")
@@ -85,7 +87,6 @@ def log():
 @login_required
 def logau():
     logout_user()
-    return redirect(url_for(index))
-
+    return redirect('http://127.0.0.1:5000/login')
 
 
