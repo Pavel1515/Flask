@@ -5,11 +5,13 @@ from flask_login import  login_user, logout_user, login_required
 
 from sweater import db, app 
 
-@app.route("/")
+@app.route("/" , methods=["POST","GET"])
 @login_required
 def index():
+    id = request.cookies.get('id')
     base = Date_b.query.all()
-    return render_template("index.html", base = base)
+    user = User.query.filter(User.id == id).first()
+    return render_template("index.html", base = base ,user = user)
     
 
 @app.route('/form', methods=['POST','GET'])
@@ -19,7 +21,9 @@ def form():
         if request.method == "POST":
             title =request.form.get("title")
             text = request.form.get("text")
-            data_b = Date_b(title = title , text = text)
+            id = request.cookies.get('id')
+            user = User.query.filter(User.id==id).first()
+            data_b = Date_b(title = title , text = text, name_user=user.user_name)
             db.session.add(data_b)
             db.session.commit()
             return redirect("http://127.0.0.1:5000/")
@@ -45,15 +49,17 @@ def reg():
     if request.method == "POST":
         login = request.form.get('login')
         password = request.form.get('password')
-        password2 = request.form.get('password')
+        password2 = request.form.get('password2')
+        user_name = request.form.get("user_name")
+        tel = request.form.get("tel")
         if not(login and password and password2):
             flash("Введите все поля")
-        elif password!=password:
+        elif password!=password2:
             flash("Пароли не совпадают")
         else:
-            try:
-                hash_psw = generate_password_hash(password2)
-                new_user = User(login = login ,password =hash_psw)
+            try:  
+                hash_psw = generate_password_hash(password)
+                new_user = User(login = login ,password =hash_psw ,user_name=user_name,tel=tel)
                 db.session.add(new_user)
                 db.session.commit()
                 return redirect('http://127.0.0.1:5000/login')
@@ -66,18 +72,18 @@ def reg():
 
 
 @app.route("/login", methods=['GET','POST'])
-def log():
+def login_all():
     login = request.form.get('login')
     password = request.form.get('password')
-
     if login and password:
-        user = User.query.order_by(User.login).first()
-
+        user = User.query.filter_by(login = login).first()
         if user and check_password_hash(user.password , password):
-            login_user(user)
-            return redirect('http://127.0.0.1:5000/')
+            h = redirect('http://127.0.0.1:5000/')
+            h.set_cookie('id', str(user.id))
+            login_user(user)   
+            return  h      
         else:
-            return 'Ошибка авторизации' 
+            return 'Ошибка авторизации'
     else:
         
         return render_template("login.html")
@@ -85,7 +91,7 @@ def log():
 
 @app.route("/logaut", methods=['GET','POST'])
 @login_required
-def logau():
+def logaut():
     logout_user()
     return redirect('http://127.0.0.1:5000/login')
 

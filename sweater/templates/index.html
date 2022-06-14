@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Привет мир{% endblock %}
 {% block body %}
+<h1 class="greeting">Добро пожаловать : {{user.user_name }}</h1>
 <a href="/form" class="hider">Добавить</a>
 <p class="title">Список ваших заметок :</p>   
 <div class="container"></div>
@@ -9,6 +10,7 @@
     <p>{{i.text}}</p>
     <a href="/delete/{{i.id}}" class="delete">Удалить</a>
     <p>Дата создания: {{i.time}}</p>
+    <p>Создал пользователь: {{i.name_user}}</p>
 {% endfor %}
 </div>
 {% endblock %}

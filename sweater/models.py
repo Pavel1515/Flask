@@ -10,6 +10,10 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key =True)
     login = db.Column(db.String(120),nullable = False, unique=True)
     password = db.Column(db.String, nullable = False)
+    user_name = db.Column(db.String(20), nullable = False)
+    tel = db.Column(db.String)
+
+
 
 
 class Date_b(db.Model):
