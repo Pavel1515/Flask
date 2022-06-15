@@ -5,7 +5,7 @@ from flask_login import  login_user, logout_user, login_required
 
 from sweater import db, app 
 
-@app.route("/" , methods=["POST","GET"])
+@app.route("/home" , methods=["POST","GET"])
 @login_required
 def index():
     id = request.cookies.get('id')
