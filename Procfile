@@ -1,1 +1,1 @@
-web:guinicorn app:start
+web:gunicorn app:start
