@@ -26,7 +26,7 @@ def form():
             data_b = Date_b(title = title , text = text, name_user=user.user_name)
             db.session.add(data_b)
             db.session.commit()
-            return redirect("http://127.0.0.1:5000/")
+            return redirect(url_for("index"))
         return render_template('form.html')
     except:
         return "База даных не доступна"
