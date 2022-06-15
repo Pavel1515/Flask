@@ -39,7 +39,7 @@ def dellete(id):
     try:
         db.session.delete(base)     
         db.session.commit()
-        return redirect('http://127.0.0.1:5000/')
+        return redirect(url_for('index'))
     except:
         return "База даных не доступна" 
 
@@ -62,7 +62,7 @@ def reg():
                 new_user = User(login = login ,password =hash_psw ,user_name=user_name,tel=tel)
                 db.session.add(new_user)
                 db.session.commit()
-                return redirect('http://127.0.0.1:5000/login')
+                return redirect(url_for('login_all'))
             except:
                 return "Такой логин есть"
     return render_template('registr.html')
@@ -78,7 +78,7 @@ def login_all():
     if login and password:
         user = User.query.filter_by(login = login).first()
         if user and check_password_hash(user.password , password):
-            h = redirect('http://127.0.0.1:5000/')
+            h = redirect(url_for('index'))
             h.set_cookie('id', str(user.id))
             login_user(user)   
             return  h      
@@ -93,6 +93,6 @@ def login_all():
 @login_required
 def logaut():
     logout_user()
-    return redirect('http://127.0.0.1:5000/login')
+    return redirect(url_for('login_all'))
 
 
