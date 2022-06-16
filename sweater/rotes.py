@@ -96,3 +96,6 @@ def logaut():
     return redirect(url_for('login_all'))
 
 
+@app.errorhandler(404)
+def pageNotFount(error):
+    return redirect(url_for('login_all'))

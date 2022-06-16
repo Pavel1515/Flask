@@ -16,3 +16,4 @@ from sweater import models, rotes
 
 
 db.create_all()
+
