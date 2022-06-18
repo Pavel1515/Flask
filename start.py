@@ -1,3 +1,0 @@
-from sweater import app
-
-
