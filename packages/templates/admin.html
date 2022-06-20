@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список админов</title>
+</head>
+<body>
+    {% for user in users %}
+    <p><span>ID: {{user.id}}</span>
+        <span>Логин:{{user.login}}</span>
+        <span>Имя:{{user.user_name}}</span>
+        <span>Телефон:{{user.tel}}</span>
+        {% if user.super_vip == True %}
+        <span>Вип: +</span>
+        {% else %} 
+        <span>Вип:-</span>
+        {% endif %} 
+    </p>
+    {% endfor %}
+</body>
+</html>
