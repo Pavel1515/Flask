@@ -6,9 +6,10 @@
 <p class="title">Список ваших заметок :</p>   
 <div class="container"></div>
 {% for i in base %}
-    <h2>Название: {{i.title}}</h2>
-    <p>{{i.text}}</p>
+    <a href="/open/{{i.id}}"><h2>Название: {{i.title}}</h2></a>
+    {% if user.id ==True %}
     <a href="/delete/{{i.id}}" class="delete">Удалить</a>
+    {% endif %} 
     <p>Дата создания: {{i.time}}</p>
     <p>Создал пользователь: {{i.name_user}}</p>
 {% endfor %}

@@ -1,11 +1,8 @@
 from flask import Flask, request, redirect, render_template, url_for, flash
 from flask_login import LoginManager, UserMixin, login_required, logout_user, login_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from packages import manager, app
-from packages.modells import User, Date_b
-
-
-
+from packages import manager, app, db
+from packages.modells import User, Date_b, Date_text
 
 @manager.user_loader
 def load_user(user_id):
@@ -105,7 +102,7 @@ def logaut():
     return redirect(url_for('login_all'))
 
 
-@app.route('/admin')
+@app.route('/admin' , methods = ['POST','GET'])
 def admin():
     users = User.query.all()
     return render_template("admin.html", users=users)
@@ -114,3 +111,21 @@ def admin():
 @app.errorhandler(404)
 def pageNotFount(error):
     return redirect(url_for('login_all'))
+
+
+@app.route('/open/<int:id>', methods=['POST','GET'])
+def open_viev(id):
+    state = Date_b.query.filter(Date_b.id == id).first()
+    chats = Date_text.query.filter(Date_text.chat == state.id)
+    try:
+        if request.method == "POST":
+            text = request.form.get("text")
+            id = request.cookies.get('id')
+            user = User.query.filter(User.login == id).first()
+            data_text = Date_text(chat = state.id, text=text, name_user=user.user_name)
+            db.session.add(data_text)
+            db.session.commit()
+            # return  render_template('open.html',state = state , chats = chats )
+    except:
+            return "База даных не доступна"
+    return  render_template('open.html',state = state , chats = chats )
