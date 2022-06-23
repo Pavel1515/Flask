@@ -1,19 +1,35 @@
 {% extends "base.html" %}
-{% block title %}Привет мир{% endblock %}
+{% block title %}Главная{% endblock %}
 {% block body %}
 <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-4">Форум для IT</span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/" class="btn-dark nav-link  text-dark aria-current="page">Главная</a></li>
+        <li class="nav-item"><a href="/logaut" class=" text-dark nav-link">Выйти</a></li>
+      </ul>
+    </header>
+  </div>
+
+<div class="container">
     <h1 class="text-end"><span class="badge bg-secondary">"{{user.user_name }}"</span></h1>
-    <a href="/form" >Задать вопрос</a>
+    <div class="btn btn-dark d-flex flex-wrap justify-content-center"><a href="/form" class="btn btn-light">Задать вопрос</a></div>
+    <br>
     {% for i in posts.items %}
-        <a href="/open/{{i.id}}"><h2>Название: {{i.title}}</h2></a>
+    <div class=" ">
+        <a href="/open/{{i.id}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"><h2 >{{i.title}}</h2></a>
         {% if user.super_vip ==True %}
-        <a href="/delete/{{i.id}}" class="delete">Удалить</a>
+    </div>
+        <a href="/delete/{{i.id}}" class="btn text-light btn-dark">Удалить</a>
         {% endif %} 
-        <p>Дата создания: {{i.time}}</p>
-        <p>Создал пользователь: {{i.name_user}}</p>
+        <p>Пользователь: {{i.name_user}}</p>
     {% endfor %}
     <nav aria-label="Пример навигации по страницам">
-        <ul class="pagination">
+        <ul class="pagination justify-content-center">
         <li class="page-item">
             <a class="page-link" href="{{url_for('index',page = posts.prev_num)}}" aria-label="Предыдущая">
             <span aria-hidden="true">&laquo;</span>

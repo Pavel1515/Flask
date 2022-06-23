@@ -1,7 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Привет мир{% endblock %}
+{% block title %}Регестрация{% endblock %}
 {% block body %}
-{% with messages = get_flashed_messages() %}
+<div class="container">
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-4">Форум для IT</span>
+    </a>
+
+    <ul class="nav nav-pills">
+      <li class="nav-item"><a href="/login" class="nav-link">Авторизация</a></li>
+    </ul>
+  </header>
+</div>
+
+
+<div class="container">
+  {% with messages = get_flashed_messages() %}
   {% if messages %}
     <ul class=flashes>
     {% for message in messages %}
@@ -10,23 +25,35 @@
     </ul>
   {% endif %}
 {% endwith %}
-<div class="container">
-    <h1>Регистрация</h1>
-    <form method="post">
-      <p>Имя</p>
-      <input type="text" name="user_name" >
-      <p>Email</p>
-        <input type="email" name="login">
-      <p>Пароль</p>
-        <input type="password" name="password">
-      <p>Пароль</p>
-        <input type="password" name="password2">
-      <p>Телефон</p>
-        <input type="tel" name="tel" >
-        <br>
-        <br>
-
-        <button type="submit" value="Registr">Зарегестрироваться</button>
-    </form>
+<form class="row g-3 needs-validation" method="post">
+  <div class="col-md-4">
+    <label for="validationCustom01" class="form-label">Имя</label>
+    <input type="text" class="form-control" id="validationCustom01" name="user_name">
+    <div class="valid-feedback">
+      Все хорошо!
+    </div>
   </div>
+  <div class="col-md-4">
+    <label for="validationCustom02" class="form-label">Email</label>
+    <input type="email" class="form-control" id="validationCustom02" name='login'>
+    <div class="valid-feedback">
+      Все хорошо!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationCustom05" class="form-label">Телефон:</label>
+    <input type="tel" name="tel" class="form-control" >
+  </div>
+  <div class="col-md-4">
+    <label for="validationCustom05" class="form-label">Пароль:</label>
+    <input type="password" name="password" class="form-control" >
+  </div>
+  <div class="col-md-4">
+    <label for="validationCustom05" class="form-label">Пароль:</label>
+    <input type="password" name="password2" class="form-control" >
+  </div>
+  <button class="btn btn-primary" type="submit">Регестрация</button>
+</div>
+ 
+
 {% endblock %}

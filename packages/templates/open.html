@@ -1,6 +1,23 @@
  {% extends "base.html" %} 
-
+{% block title %}
+{{state.title}}
+{% endblock %}
  {% block body %}
+ <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-4">Форум для IT</span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Главная</a></li>
+        <li class="nav-item"><a href="/logaut" class="nav-link">Выйти</a></li>
+
+      </ul>
+    </header>
+  </div>
+
  <div class="container">
     <h1>{{state.title}}</h1>
     <p>{{state.text}}</p>
@@ -9,8 +26,12 @@
     <p>{{i.text}}</p>
     {% endfor %}
     <form method="post">
-        <textarea name="text"  cols="30" rows="10"></textarea>
-        <button type="submit">Отправить</button>
+        <div class="input-group">
+            <span class="input-group-text">Коментировать</span>
+            <textarea class="form-control" aria-label="С текстовым полем"  name="text"></textarea>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-dark">Отправить</button>
     </form>
  </div>
 {% endblock %} 

@@ -1,13 +1,29 @@
 {% extends "base.html" %}
-{% block title %}Привет мир{% endblock %}
+{% block title %}Задать вопрос{% endblock %}
 {% block body %}
 <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+        <span class="fs-4">Форум для IT</span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="/" class="btn-dark nav-link  text-dark aria-current="page">Главная</a></li>
+        <li class="nav-item"><a href="/logaut" class=" text-dark nav-link">Выйти</a></li>
+      </ul>
+    </header>
+  </div>
+<div class="container">
     <form  method="post">
-        <p>Тема вопроса</p>
-        <input type="text" name="title" >
-        <br>
-        <p>Вся суть вопроса</p>
-        <input type="text" name="text" >
+        <div class="input-group">
+            <span class="input-group-text">Заголовок вопроса</span>
+            <textarea class="form-control" aria-label="С текстовым полем"  name="title"></textarea>
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Текст вопроса</span>
+            <textarea class="form-control" aria-label="С текстовым полем"  name="text"></textarea>
+        </div>
         <button type="submit" value="Login" class="btn btn-primary">Задать вопрос</button>
     
     </form>
