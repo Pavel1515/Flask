@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 {% block title %}Привет мир{% endblock %}
 {% block body %}
-<form  method="post">
-    <input type="text" name="title" >
-    <input type="text" name="text" >
-    <button type="submit" value="Login" class="btn btn-primary">Задать вопрос</button>
+<div class="container">
+    <form  method="post">
+        <p>Тема вопроса</p>
+        <input type="text" name="title" >
+        <br>
+        <p>Вся суть вопроса</p>
+        <input type="text" name="text" >
+        <button type="submit" value="Login" class="btn btn-primary">Задать вопрос</button>
+    
+    </form>
+</div>
 
-</form>
 {% endblock %}

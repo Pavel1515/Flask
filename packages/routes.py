@@ -9,48 +9,46 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/")
+@app.route("/<int:page>")
 @login_required
-def index():
+def index(page=1):
     id = request.cookies.get('id')
-    base = Date_b.query.all()
     user = User.query.filter(User.login == id).first()
-    return render_template("index.html", base=base, user=user)
+    posts = db.session.query(Date_b).paginate(page,5,False)
+    return render_template("index.html", posts=posts,user=user)
 
 
 @app.route('/form', methods=['POST', 'GET'])
 @login_required
 def form():
-    try:
-        if request.method == "POST":
-            title = request.form.get("title")
-            text = request.form.get("text")
-            id = request.cookies.get('id')
-            user = User.query.filter(User.login == id).first()
-            data_b = Date_b(title=title, text=text, name_user=user.user_name)
-            db.session.add(data_b)
-            db.session.commit()
-            return redirect(url_for("index"))
-        return render_template('form.html')
-    except:
-        return "База даных не доступна"
+    if request.method == "POST":
+        title = request.form.get("title")
+        text = request.form.get("text")
+        id = request.cookies.get('id')
+        user = User.query.filter(User.login == id).first()
+        data_b = Date_b(title=title, text=text, name_user=user.user_name)
+        db.session.add(data_b)
+        db.session.commit()
+        return redirect(url_for("index"))
+    return render_template('form.html')
+
 
 
 @app.route('/delete/<int:id>',methods=['POST','GET'])
 @login_required
 def dellete(id):
-    base = Date_b.query.get(id)
+    base = db.session.query(Date_b).get(id)
     login = request.cookies.get('id')
-    access= User.query.filter(User.login == login).first()
+    access= db.session.query(User).filter(User.login == login).first()
     if access.super_vip == True:
-        try:
-            db.session.delete(base)
-            db.session.commit()
-            return redirect(url_for('index'))
-        except:
-            return "База даных не доступна"
+        db.session.query(Date_text).filter(Date_text.chat == id).delete()
+        db.session.delete(base)
+        db.session.commit()
+        return redirect(url_for('index'))
     else:
         return redirect(url_for('index'))
+
 
 
 @app.route("/registr", methods=['GET', 'POST'])
@@ -113,19 +111,16 @@ def pageNotFount(error):
     return redirect(url_for('login_all'))
 
 
+
 @app.route('/open/<int:id>', methods=['POST','GET'])
 def open_viev(id):
-    state = Date_b.query.filter(Date_b.id == id).first()
-    chats = Date_text.query.filter(Date_text.chat == state.id)
-    try:
-        if request.method == "POST":
-            text = request.form.get("text")
-            id = request.cookies.get('id')
-            user = User.query.filter(User.login == id).first()
-            data_text = Date_text(chat = state.id, text=text, name_user=user.user_name)
-            db.session.add(data_text)
-            db.session.commit()
-            # return  render_template('open.html',state = state , chats = chats )
-    except:
-            return "База даных не доступна"
-    return  render_template('open.html',state = state , chats = chats )
+    state = db.session.query(Date_b).filter(Date_b.id == id).first()
+    chats = db.session.query(Date_text).filter(Date_text.chat == state.id)
+    if request.method == "POST":
+        text = request.form.get("text")
+        id = request.cookies.get('id')
+        user = User.query.filter(User.login == id).first()
+        data_text = Date_text(chat = state.id, text=text, name_user=user.user_name)
+        db.session.add(data_text)
+        db.session.commit()
+    return  render_template('open.html',state = state ,chats = chats)

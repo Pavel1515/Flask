@@ -1,23 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список админов</title>
-</head>
-<body>
-    {% for user in users %}
-    <p><span>ID: {{user.id}}</span>
-        <span>Логин:{{user.login}}</span>
-        <span>Имя:{{user.user_name}}</span>
-        <span>Телефон:{{user.tel}}</span>
+{% extends "base.html" %}
+{% block title %}
+Список админов
+{% endblock %}
+{% block body %}
+{% for user in users %}
+<div class="container">
+    <div class="my-row">
+        <p>ID: {{user.id}}</p>
+        <p>Логин:{{user.login}}</p>
+        <p>Имя:{{user.user_name}}</p>
+        <p>Телефон:{{user.tel}}</p>
         {% if user.super_vip == True %}
-        <span>Вип: +</span>
+        <p>Вип: +</p>
         {% else %} 
-        <span>Вип:-</span>
+        <p>Вип:-</p>
         {% endif %} 
-    </p>
-    {% endfor %}
-</body>
-</html>
+        <input type="checkbox" name="cheked">
+    </div>
+
+</div>
+{% endfor %}
+{% endblock %}

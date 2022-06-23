@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Добро пожаловать : {{user.user_name }}</h1>
     <a href="/form" class="hider">Задать вопрос</a>
-    {% for i in base %}
+    {% for i in posts.items %}
         <a href="/open/{{i.id}}"><h2>Название: {{i.title}}</h2></a>
         {% if user.super_vip ==True %}
         <a href="/delete/{{i.id}}" class="delete">Удалить</a>
@@ -12,10 +12,23 @@
         <p>Дата создания: {{i.time}}</p>
         <p>Создал пользователь: {{i.name_user}}</p>
     {% endfor %}
-    </div>
-
+    <nav aria-label="Пример навигации по страницам">
+        <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="{{url_for('index',page = posts.prev_num)}}" aria-label="Предыдущая">
+            <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% for page in posts.iter_pages() %}
+        <li class="page-item"><a class="page-link" href="/{{page}}">{{page}}</a></li>
+        <li class="page-item">
+        {% endfor %}
+            <a class="page-link" href="{{url_for('index',page =posts.next_num)}}" aria-label="Следующая">
+            <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        </ul>
+    </nav>
 </div>
-
-
 
 {% endblock %}
