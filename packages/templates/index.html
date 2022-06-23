@@ -2,8 +2,8 @@
 {% block title %}Привет мир{% endblock %}
 {% block body %}
 <div class="container">
-    <h1>Добро пожаловать : {{user.user_name }}</h1>
-    <a href="/form" class="hider">Задать вопрос</a>
+    <h1 class="text-end"><span class="badge bg-secondary">"{{user.user_name }}"</span></h1>
+    <a href="/form" >Задать вопрос</a>
     {% for i in posts.items %}
         <a href="/open/{{i.id}}"><h2>Название: {{i.title}}</h2></a>
         {% if user.super_vip ==True %}

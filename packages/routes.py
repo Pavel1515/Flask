@@ -30,6 +30,7 @@ def form():
         data_b = Date_b(title=title, text=text, name_user=user.user_name)
         db.session.add(data_b)
         db.session.commit()
+        posts = db.session.query(Date_b).all()
         return redirect(url_for("index"))
     return render_template('form.html')
 
