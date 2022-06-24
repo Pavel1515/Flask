@@ -29,3 +29,5 @@ class Date_b(db.Model):
     def __repl__(self):
         return '<Date_b %r>' % self.id
 
+
+       

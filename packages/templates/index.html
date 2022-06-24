@@ -17,7 +17,7 @@
 
 <div class="container">
     <h1 class="text-end"><span class="badge bg-secondary">"{{user.user_name }}"</span></h1>
-    <div class="btn btn-dark d-flex flex-wrap justify-content-center"><a href="/form" class="btn btn-light">Задать вопрос</a></div>
+    <div class="btn btn-dark d-flex flex-wrap justify-content-center"><a href="/form" class="btn btn-light">Добавить статью</a></div>
     <br>
     {% for i in posts.items %}
     <div class=" ">
@@ -26,7 +26,7 @@
     </div>
         <a href="/delete/{{i.id}}" class="btn text-light btn-dark">Удалить</a>
         {% endif %} 
-        <p>Пользователь: {{i.name_user}}</p>
+        <p>Добавил: {{i.name_user}}</p>
     {% endfor %}
     <nav aria-label="Пример навигации по страницам">
         <ul class="pagination justify-content-center">

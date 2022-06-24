@@ -23,8 +23,11 @@
     <p>{{state.text}}</p>
     <br>
     {% for i in chats %}
-    <p>{{i.text}}</p>
+    <p>{{i.name_user}}:  {{i.text}}</p>
+    <a href="/open/delete/{{i.id}}">Удалить коментарий</a>
     {% endfor %}
+    <br>
+    <br>
     <form method="post">
         <div class="input-group">
             <span class="input-group-text">Коментировать</span>
