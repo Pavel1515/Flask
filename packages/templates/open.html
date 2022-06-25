@@ -24,7 +24,9 @@
     <br>
     {% for i in chats %}
     <p>{{i.name_user}}:  {{i.text}}</p>
+    {% if  (user.user_name == i.name_user) or (user.super_vip == True) %}
     <a href="/open/delete/{{i.id}}">Удалить коментарий</a>
+    {% endif %}
     {% endfor %}
     <br>
     <br>

@@ -103,14 +103,14 @@ def pageNotFount(error):
 def open_viev(id):
     state = db.session.query(Date_b).filter(Date_b.id == id).first()
     chats = db.session.query(Date_text).filter(Date_text.chat == state.id).order_by(Date_text.id.desc())
+    id = request.cookies.get('id')
+    user = User.query.filter(User.login == id).first()
     if request.method == "POST":
         text = request.form.get("text")
-        id = request.cookies.get('id')
-        user = User.query.filter(User.login == id).first()
         data_text = Date_text(chat = state.id, text=text, name_user=user.user_name)
         db.session.add(data_text)
         db.session.commit()
-    return  render_template('open.html',state = state ,chats = chats)
+    return  render_template('open.html',user = user, state = state ,chats = chats)
 
 
 @app.route('/open/delete/<int:id>')
@@ -124,5 +124,4 @@ def delete_koments(id):
         db.session.commit()
         return redirect(url_for('open_viev',id =never))
     else:
-        return 'Нету прав'
-
+        return redirect(url_for('open_viev',id =never))
