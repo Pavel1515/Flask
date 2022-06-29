@@ -1,4 +1,4 @@
- {% extends "base.html" %} 
+{% extends "base.html" %} 
 {% block title %}
 {{state.title}}
 {% endblock %}
@@ -20,7 +20,7 @@
 
  <div class="container">
     <h1>{{state.title}}</h1>
-    <p>{{state.text}}</p>
+    <pre class="open">{{state.text}}</pre>
     <br>
     {% for i in chats %}
     <p>{{i.name_user}}:  {{i.text}}</p>

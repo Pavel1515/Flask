@@ -33,7 +33,6 @@ def form():
     return render_template('form.html')
 
 
-
 @app.route('/delete/<int:id>',methods=['POST','GET'])
 @login_required
 def dellete(id):
@@ -46,7 +45,6 @@ def dellete(id):
         return redirect(url_for('index'))
     else:
         return redirect(url_for('index'))
-
 
 
 @app.route("/registr", methods=['GET', 'POST'])
@@ -93,10 +91,37 @@ def admin():
     return render_template("admin.html", users=users)
 
 
+@app.route('/admin_add/<int:id>',methods=['POST','GET'])
+def admin_add(id):
+    user = db.session.query(User).filter(User.id == id).first()
+    admin = db.session.query(User).filter(User.login == 'pavelerebacan@gmail.com').first()
+    if request.method == "POST":
+        if admin and check_password_hash(admin.password, Login().password):
+            user.super_vip = True
+            db.session.commit()
+            return redirect('/admin')
+        else:
+            return 'Нету прав попросите создателя'
+    return render_template('admin_add.html',user = user,admin = admin)
+
+
+@app.route('/admin_delete/<int:id>',methods=['POST','GET'])
+def admin_delete(id):
+    user = db.session.query(User).filter(User.id == id).first()
+    admin = db.session.query(User).filter(User.login == 'pavelerebacan@gmail.com').first()
+    if request.method == "POST":
+        if admin and check_password_hash(admin.password, Login().password):
+            user.super_vip = False
+            db.session.commit()
+            return redirect('/admin')
+        else:
+            return 'Нету прав попросите создателя'
+    return render_template('admin_delete.html',user = user,admin = admin)
+    
+
 @app.errorhandler(404)
 def pageNotFount(error):
     return redirect(url_for('login_all'))
-
 
 
 @app.route('/open/<int:id>', methods=['POST','GET'])

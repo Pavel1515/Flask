@@ -26,10 +26,12 @@
         <p>Телефон:{{user.tel}}</p>
         {% if user.super_vip == True %}
         <p>Вип: +</p>
+        <a href="/admin_delete/{{user.id}}">Удалить вип</a>
         {% else %} 
         <p>Вип:-</p>
+        <a href="/admin_add/{{user.id}}">предоставить</a>
         {% endif %} 
-        in
+
     </div>
 
 </div>

@@ -1,5 +1,6 @@
 from flask import request
 
+
 class Login:
     def __init__(self):
         self.id = request.cookies.get('id')

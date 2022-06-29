@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}
+Удаление admina {{user.user_name}}
+{% endblock %}
+{% block body %}
+<br>
+<form method="post" >
+    <p>Пароль Главного админа
+    </p>
+    <input type="password" name="password" >
+    <br>
+    <br>
+    <button type="submit">Удалить вип</button>
+</form>
+{% endblock %}
